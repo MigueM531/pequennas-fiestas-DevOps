@@ -1,0 +1,8 @@
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/ruales1138/pequennas_fiestas-frontend.git
+	branch = main
+[submodule "backend"]
+	path = backend
+	url = https://github.com/ruales1138/pequennas_fiestas-backend.git
+	branch = main
