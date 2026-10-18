@@ -105,3 +105,30 @@ El backend también está publicado:
 ```bash
 docker pull ruales1138/gigashow-backend:latest
 ```
+
+## Historias y pruebas
+
+Las historias de usuario y sus responsables están documentadas en
+[HISTORIAS_USUARIO.md](./HISTORIAS_USUARIO.md).
+
+### Pruebas unitarias del backend
+
+Desde `backend`:
+
+```bash
+npm ci
+npm test
+```
+
+### Pruebas iniciales con Playwright
+
+Con Docker Compose levantado, desde `frontend`:
+
+```bash
+npm ci
+npx playwright install chromium
+npm run test:e2e
+```
+
+Las pruebas verifican la carga de la página principal y la navegación directa
+al catálogo.
