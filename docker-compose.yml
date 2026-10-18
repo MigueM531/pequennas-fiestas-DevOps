@@ -1,0 +1,45 @@
+services:
+  database:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: gigashow
+      POSTGRES_USER: gigashow
+      POSTGRES_PASSWORD: gigashow_dev_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/db/init.sql:/docker-entrypoint-initdb.d/001-init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gigashow -d gigashow"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+    environment:
+      DATABASE_URL: postgresql://gigashow:gigashow_dev_password@database:5432/gigashow
+      PORT: 3000
+      FRONTEND_ORIGIN: http://localhost:8081
+      BACKEND_URL: http://localhost:3001
+      BETTER_AUTH_SECRET: compose-development-secret-change-me
+    ports:
+      - "3001:3000"
+    depends_on:
+      database:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: http://localhost:3001
+    ports:
+      - "8081:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

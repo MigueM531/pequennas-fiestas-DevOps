@@ -22,7 +22,7 @@ Los submódulos tienen sus propios repositorios:
 | Frontend | React 19, Vite 7, Node.js 22 |
 | Frontend en producción | Nginx 1.27 |
 | Backend | Node.js, Express |
-| Base de datos | PostgreSQL |
+| Base de datos | PostgreSQL 16 |
 | Contenedores | Docker y Docker Compose |
 
 ## Clonar el proyecto
@@ -66,8 +66,42 @@ docker run --rm -p 8080:80 ruales1138/gigashow-frontend:latest
 
 La aplicación estará disponible en `http://localhost:8080`.
 
-## Estado de la contenerización
+## Ejecutar frontend, backend y base de datos
 
-El frontend ya cuenta con un `Dockerfile` multietapa y una imagen publicada
-en DockerHub. La configuración de Docker Compose y los servicios de backend y
-base de datos se incorporarán en la siguiente etapa del proyecto.
+Docker Compose levanta los tres servicios y crea el esquema inicial de
+PostgreSQL:
+
+```bash
+docker compose up --build
+```
+
+Servicios disponibles:
+
+- Frontend: `http://localhost:8081`
+- Backend: `http://localhost:3001`
+- Swagger: `http://localhost:3001/api-docs/`
+- PostgreSQL: `localhost:5432`
+
+Para detener los servicios:
+
+```bash
+docker compose down
+```
+
+Para eliminar también los datos locales de PostgreSQL:
+
+```bash
+docker compose down -v
+```
+
+El frontend ya tiene una imagen publicada en DockerHub:
+
+```bash
+docker pull ruales1138/gigashow-frontend:latest
+```
+
+El backend también está publicado:
+
+```bash
+docker pull ruales1138/gigashow-backend:latest
+```
