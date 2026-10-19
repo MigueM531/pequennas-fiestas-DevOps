@@ -7,6 +7,12 @@
 Aplicación web para conectar clientes con artistas, consultar perfiles y
 gestionar solicitudes de reserva.
 
+## Integrantes
+
+- Heiver David Ruales Luna
+- Alejandro Ruiz Diaz
+- Miguel Angel Martines Tamayo
+
 Repositorio principal:
 
 - [Monorepo en GitHub](https://github.com/ruales1138/pequennas_fiestas)
@@ -192,12 +198,24 @@ Swagger UI: HTTP 200
 OpenAPI JSON: HTTP 200
 ```
 
-## 7. Historias de usuario
+## 7. Historias de usuario y trazabilidad
 
-Las historias, criterios de aceptación, responsables y estados están
-documentados en:
+Las historias de esta entrega mantienen la trazabilidad con las historias
+definidas en la Entrega 1. Se actualizan sus criterios de aceptación,
+responsables y estados según la implementación actual.
 
-- [HISTORIAS_USUARIO.md](./HISTORIAS_USUARIO.md)
+| ID | Historia de usuario | Criterios de aceptación | Responsable | Estado |
+| --- | --- | --- | --- | --- |
+| HU-01 | Como cliente, quiero registrarme e iniciar sesión para acceder a las opciones de reserva. | El usuario puede registrarse, iniciar sesión y mantener una sesión activa mediante la API de autenticación. | Alejandro Ruiz Diaz | Implementada |
+| HU-02 | Como cliente, quiero ver el catálogo de shows y servicios de fiesta para elegir la mejor opción. | El catálogo carga los servicios disponibles y permite consultar los detalles de un artista. | Miguel Angel Martines Tamayo | Implementada |
+| HU-03 | Como cliente, quiero reservar un servicio seleccionando la fecha de mi evento. | El cliente autenticado puede enviar una solicitud de reserva con la información del evento y visualizar el resultado. | Alejandro Ruiz Diaz | Implementada |
+| HU-04 | Como proveedor, quiero subir fotos de mi espectáculo para promocionar mi oferta. | El proveedor autenticado puede cargar imágenes válidas y el sistema las almacena para su consulta. | Miguel Angel Martines Tamayo | Implementada |
+| HU-05 | Como administrador, quiero ver la lista general de usuarios para auditar el sistema. | El administrador puede consultar un listado protegido de usuarios y servicios registrados. | Heiver David Ruales Luna | No iniciada |
+| HU-06 | Como proveedor, quiero configurar mi perfil para publicar mi información y servicios. | El proveedor puede completar y guardar la información de su perfil mediante el flujo de onboarding. | Miguel Angel Martines Tamayo | Implementada |
+
+HU-06 es una ampliación del alcance definida después de la Entrega 1. La
+verificación de `/health`, `/health/db` y Swagger se considera una actividad
+técnica de validación del sistema, no una historia de usuario independiente.
 
 ## 8. Pruebas unitarias
 
@@ -292,4 +310,3 @@ git submodule update --init --recursive
 | Historias con responsables | Cumplido |
 | Pruebas unitarias | 2 pruebas exitosas |
 | Pruebas Playwright | 2 pruebas exitosas |
-

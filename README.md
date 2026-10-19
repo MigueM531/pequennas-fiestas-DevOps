@@ -109,7 +109,7 @@ docker pull ruales1138/gigashow-backend:latest
 ## Historias y pruebas
 
 Las historias de usuario y sus responsables están documentadas en
-[HISTORIAS_USUARIO.md](./HISTORIAS_USUARIO.md).
+[ENTREGA_SEGUNDA.md](./ENTREGA_SEGUNDA.md).
 
 ### Pruebas unitarias del backend
 
