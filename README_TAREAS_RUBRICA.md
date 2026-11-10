@@ -98,8 +98,8 @@ Las tres personas deben revisar la integración y validar el resultado final.
 - [x] Agregar formulario de imagen con `multipart/form-data`.
 - [ ] Mostrar confirmación antes de eliminar.
 - [x] Mostrar mensajes de éxito y error.
-- [ ] Crear componentes reutilizables para la vista administrativa de Buri.
-- [ ] Verificar diseño responsive y corregir textos/ortografía.
+- [x] Crear componentes reutilizables para la vista administrativa de Buri.
+- [x] Verificar diseño responsive y corregir textos/ortografía.
 
 ### Rutas frontend
 
