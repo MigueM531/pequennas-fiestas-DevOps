@@ -4,15 +4,15 @@
 
 | Persona | Responsabilidad principal |
 | --- | --- |
-| **Pinilla** | Backend, base de datos, Prisma, CRUD y almacenamiento de imágenes |
-| **Buri** | JWT, roles, administración, seed, pruebas, documentación y despliegue |
+| **Buri** | Backend, base de datos, Prisma, CRUD y almacenamiento de imágenes |
+| **Pinilla** | JWT, roles, administración, seed, pruebas, documentación y despliegue |
 | **Ruales** | Frontend, Next.js, TypeScript, vistas, UX y cliente HTTP |
 
 Las tres personas deben revisar la integración y validar el resultado final.
 
 ---
 
-## Pinilla — Backend, base de datos y API
+## Buri — Backend, base de datos y API
 
 ### Arquitectura y tecnologías
 
@@ -66,7 +66,7 @@ Las tres personas deben revisar la integración y validar el resultado final.
 - [ ] Reemplazar el almacenamiento local de Multer por Supabase Storage o S3.
 - [ ] Validar tipo y tamaño del archivo.
 - [ ] Guardar en la base de datos la URL resultante.
-- [ ] Dejar documentado el endpoint para que Buri agregue su protección.
+- [ ] Dejar documentado el endpoint para que Pinilla agregue su protección.
 
 ---
 
@@ -98,7 +98,7 @@ Las tres personas deben revisar la integración y validar el resultado final.
 - [x] Agregar formulario de imagen con `multipart/form-data`.
 - [ ] Mostrar confirmación antes de eliminar.
 - [x] Mostrar mensajes de éxito y error.
-- [x] Crear componentes reutilizables para la vista administrativa de Buri.
+- [x] Crear componentes reutilizables para la vista administrativa de Pinilla.
 - [x] Verificar diseño responsive y corregir textos/ortografía.
 
 ### Rutas frontend
@@ -110,7 +110,7 @@ Las tres personas deben revisar la integración y validar el resultado final.
 
 ---
 
-## Buri — Autenticación, administración, calidad y entrega
+## Pinilla — Autenticación, administración, calidad y entrega
 
 ### JWT y contraseñas
 
@@ -182,10 +182,10 @@ Las tres personas deben revisar la integración y validar el resultado final.
 
 ## Validación compartida
 
-- [ ] Pinilla verifica esquema, migraciones, CRUD, paginación, filtros e
+- [ ] Buri verifica esquema, migraciones, CRUD, paginación, filtros e
   imágenes.
 - [ ] Ruales verifica vistas, responsive, cliente HTTP y flujo de usuario.
-- [ ] Buri verifica autenticación, roles, seed, pruebas y despliegue.
+- [ ] Pinilla verifica autenticación, roles, seed, pruebas y despliegue.
 - [ ] Las tres personas revisan la integración completa.
 - [ ] Revisar el historial de commits de las tres personas.
 
@@ -196,10 +196,10 @@ Frontend: npm run build, npm run lint, npm run test:e2e
 
 ## Orden recomendado
 
-1. **Pinilla:** Prisma, migraciones, CRUD, paginación, filtros e imágenes.
-2. **Buri:** JWT, seed de `admin` y `user`, middleware y roles.
+1. **Buri:** Prisma, migraciones, CRUD, paginación, filtros e imágenes.
+2. **Pinilla:** JWT, seed de `admin` y `user`, middleware y roles.
 3. **Ruales:** migración frontend, cliente HTTP, sesión y vistas.
-4. **Buri:** panel administrativo, pruebas, documentación y despliegue.
+4. **Pinilla:** panel administrativo, pruebas, documentación y despliegue.
 5. **Las tres personas:** pruebas integrales y validación en producción.
 
 ## Criterio de terminado
