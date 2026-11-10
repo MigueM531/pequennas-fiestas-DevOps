@@ -4,47 +4,47 @@
 
 | Persona | Responsabilidad principal |
 | --- | --- |
-| **Buri** | Backend, base de datos, Prisma, CRUD y almacenamiento de imágenes |
-| **Pinilla** | JWT, roles, administración, seed, pruebas, documentación y despliegue |
+| **Pinilla** | Backend, base de datos, Prisma, CRUD y almacenamiento de imágenes |
+| **Buri** | JWT, roles, administración, seed, pruebas, documentación y despliegue |
 | **Ruales** | Frontend, Next.js, TypeScript, vistas, UX y cliente HTTP |
 
 Las tres personas deben revisar la integración y validar el resultado final.
 
 ---
 
-## Buri — Backend, base de datos y API
+## Pinilla — Backend, base de datos y API
 
 ### Arquitectura y tecnologías
 
-- [ ] Migrar el backend de JavaScript a TypeScript.
-- [ ] Crear `tsconfig.json` y migrar los archivos principales a `.ts`.
-- [ ] Organizar el backend en `domain`, `application`, `infrastructure` e
+- [x] Migrar el backend de JavaScript a TypeScript.
+- [x] Crear `tsconfig.json` y migrar los archivos principales a `.ts`.
+- [x] Organizar el backend en `domain`, `application`, `infrastructure` e
   `interface`.
-- [ ] Evitar que los controladores accedan directamente a Prisma.
+- [x] Evitar que los controladores accedan directamente a Prisma.
 
 ### Base de datos
 
-- [ ] Migrar Drizzle/SQL a Prisma.
-- [ ] Crear `prisma/schema.prisma` y migraciones reproducibles.
-- [ ] Mantener como mínimo `User`, `ArtistProfile`, `Booking` y `ArtistRating`.
-- [ ] Mantener las relaciones mediante llaves foráneas.
-- [ ] Usar `Decimal` para precios, `DateTime` para fechas y `@unique` donde
+- [x] Migrar Drizzle/SQL a Prisma.
+- [x] Crear `prisma/schema.prisma` y migraciones reproducibles.
+- [x] Mantener como mínimo `User`, `ArtistProfile`, `Booking` y `ArtistRating`.
+- [x] Mantener las relaciones mediante llaves foráneas.
+- [x] Usar `Decimal` para precios, `DateTime` para fechas y `@unique` donde
   corresponda.
-- [ ] Agregar campos de borrado lógico como `isActive`, `deletedAt` o `status`.
-- [ ] Dejar preparado el esquema para los roles `admin` y `user`.
+- [x] Agregar campos de borrado lógico como `isActive`, `deletedAt` o `status`.
+- [x] Dejar preparado el esquema para los roles `admin` y `user`.
 
 ### API REST
 
-- [ ] Definir tres recursos de dominio con rutas plurales bajo `/api`.
-- [ ] Implementar CRUD completo para los tres recursos:
+- [x] Definir tres recursos de dominio con rutas plurales bajo `/api`.
+- [x] Implementar CRUD completo para los tres recursos:
   - `GET` listado.
   - `GET /:id`.
   - `POST`.
   - `PUT` o `PATCH`.
   - `DELETE` lógico.
-- [ ] Usar códigos HTTP correctos: `200`, `201`, `204`, `400`, `404`, `409` y
+- [x] Usar códigos HTTP correctos: `200`, `201`, `204`, `400`, `404`, `409` y
   `500`.
-- [ ] Agregar paginación al listado principal:
+- [x] Agregar paginación al listado principal:
 
 ```json
 {
@@ -58,15 +58,15 @@ Las tres personas deben revisar la integración y validar el resultado final.
 }
 ```
 
-- [ ] Agregar al menos un filtro por categoría, ciudad, texto o precio.
-- [ ] Mantener respuestas consistentes.
+- [x] Agregar al menos un filtro por categoría, ciudad, texto o precio.
+- [x] Mantener respuestas consistentes.
 
 ### Imágenes
 
-- [ ] Reemplazar el almacenamiento local de Multer por Supabase Storage o S3.
-- [ ] Validar tipo y tamaño del archivo.
-- [ ] Guardar en la base de datos la URL resultante.
-- [ ] Dejar documentado el endpoint para que Pinilla agregue su protección.
+- [x] Reemplazar el almacenamiento local de Multer por Supabase Storage o S3.
+- [x] Validar tipo y tamaño del archivo.
+- [x] Guardar en la base de datos la URL resultante.
+- [x] Dejar documentado el endpoint para que Buri agregue su protección.
 
 ---
 
@@ -98,7 +98,7 @@ Las tres personas deben revisar la integración y validar el resultado final.
 - [x] Agregar formulario de imagen con `multipart/form-data`.
 - [ ] Mostrar confirmación antes de eliminar.
 - [x] Mostrar mensajes de éxito y error.
-- [x] Crear componentes reutilizables para la vista administrativa de Pinilla.
+- [x] Crear componentes reutilizables para la vista administrativa de Buri.
 - [x] Verificar diseño responsive y corregir textos/ortografía.
 
 ### Rutas frontend
@@ -110,7 +110,7 @@ Las tres personas deben revisar la integración y validar el resultado final.
 
 ---
 
-## Pinilla — Autenticación, administración, calidad y entrega
+## Buri — Autenticación, administración, calidad y entrega
 
 ### JWT y contraseñas
 
@@ -152,9 +152,9 @@ Las tres personas deben revisar la integración y validar el resultado final.
 
 - [ ] Conectar registro y login con los endpoints JWT.
 - [ ] Impedir que el formulario frontend permita seleccionar `admin`.
-- [x] Mostrar el panel administrativo únicamente a usuarios `admin`.
-- [x] Integrar los guards preparados por Ruales.
-- [x] Verificar navegación directa y respuesta visual 403.
+- [ ] Mostrar el panel administrativo únicamente a usuarios `admin`.
+- [ ] Integrar los guards preparados por Ruales.
+- [ ] Verificar navegación directa y respuesta visual 403.
 
 ### Pruebas
 
@@ -182,10 +182,10 @@ Las tres personas deben revisar la integración y validar el resultado final.
 
 ## Validación compartida
 
-- [ ] Buri verifica esquema, migraciones, CRUD, paginación, filtros e
+- [x] Pinilla verifica esquema, migraciones, CRUD, paginación, filtros e
   imágenes.
 - [ ] Ruales verifica vistas, responsive, cliente HTTP y flujo de usuario.
-- [ ] Pinilla verifica autenticación, roles, seed, pruebas y despliegue.
+- [ ] Buri verifica autenticación, roles, seed, pruebas y despliegue.
 - [ ] Las tres personas revisan la integración completa.
 - [ ] Revisar el historial de commits de las tres personas.
 
@@ -196,14 +196,14 @@ Frontend: npm run build, npm run lint, npm run test:e2e
 
 ## Orden recomendado
 
-1. **Buri:** Prisma, migraciones, CRUD, paginación, filtros e imágenes.
-2. **Pinilla:** JWT, seed de `admin` y `user`, middleware y roles.
+1. **Pinilla:** Prisma, migraciones, CRUD, paginación, filtros e imágenes.
+2. **Buri:** JWT, seed de `admin` y `user`, middleware y roles.
 3. **Ruales:** migración frontend, cliente HTTP, sesión y vistas.
-4. **Pinilla:** panel administrativo, pruebas, documentación y despliegue.
+4. **Buri:** panel administrativo, pruebas, documentación y despliegue.
 5. **Las tres personas:** pruebas integrales y validación en producción.
 
 ## Criterio de terminado
 
-Una tarea está terminada cuando funciona localmente, tiene una prueba o
-validación correspondiente, está integrada con el resto de la aplicación y
-funciona en producción cuando aplica.
+Una tarea está terminada cuando funciona localmente, tiene una prueba o validación
+correspondiente, está integrada con el resto de la aplicación y funciona en producción cuando
+aplica.
