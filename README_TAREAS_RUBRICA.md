@@ -75,11 +75,11 @@ Las tres personas deben revisar la integración y validar el resultado final.
 ### Arquitectura y tecnologías
 
 - [ ] Migrar React/Vite a Next.js con App Router.
-- [ ] Migrar JavaScript/JSX a TypeScript/TSX.
+- [x] Migrar JavaScript/JSX a TypeScript/TSX.
 - [x] Configurar TypeScript y migrar el cliente HTTP centralizado a `.ts`.
 - [x] Organizar `app/` para rutas y `src/features/` para funcionalidades.
-- [ ] Separar cada feature en tipos, servicios, hooks y componentes.
-- [ ] Mantener Tailwind y eliminar lógica de negocio de las páginas.
+- [x] Separar cada feature en tipos, servicios, hooks y componentes.
+- [x] Mantener Tailwind y eliminar lógica de negocio de las páginas.
 
 ### Cliente y sesión
 
