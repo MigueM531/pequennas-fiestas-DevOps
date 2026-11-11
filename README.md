@@ -17,9 +17,9 @@ Este repositorio articula dos submódulos Git independientes:
 
 | Integrante | Área / Rol | Entregables Principales |
 | --- | --- | --- |
-| **Pinilla** | Backend Base, Prisma & Storage | Migración a TypeScript, arquitectura limpia de 4 capas (`domain`, `application`, `infrastructure`, `interface`), Prisma ORM y migraciones, CRUD de entidades (`artists`, `bookings`, `ratings`) con paginación/filtros/borrado lógico, y subida de imágenes a Supabase Storage. |
-| **Ruales** | Frontend Next.js & Experiencia de Usuario | Migración del frontend a Next.js App Router con TypeScript, catálogo con filtros dinámicos, detalle de artista, reservas, cliente HTTP centralizado y diseño responsivo. |
-| **Tomás Buriticá (Buri)** | Autenticación JWT, Roles, Panel Admin & Pruebas | Endpoints `/api/auth/register` y `/api/auth/login` con JWT y `bcrypt`, seed de base de datos (`admin` y `user`), middlewares `requireAuth` y `requireRole`, rutas y panel administrativo (`/api/admin/*` y `/admin`), pruebas unitarias y E2E con Playwright, y despliegue en Render/Vercel. |
+| **Tomás Buriticá (Buri)** | Backend Base, Prisma & Storage | Migración a TypeScript, arquitectura limpia de 4 capas (`domain`, `application`, `infrastructure`, `interface`), Prisma ORM y migraciones, CRUD de entidades (`artists`, `bookings`, `ratings`) con paginación/filtros/borrado lógico, y subida de imágenes a Supabase Storage. |
+| **David Ruales** | Frontend Next.js & Experiencia de Usuario | Migración del frontend a Next.js App Router con TypeScript, catálogo con filtros dinámicos, detalle de artista, reservas, cliente HTTP centralizado y diseño responsivo. |
+| **Juan Sebastián Pinilla Giraldo** | Autenticación JWT, Roles, Panel Admin & Pruebas | Endpoints `/api/auth/register` y `/api/auth/login` con JWT y `bcrypt`, seed de base de datos (`admin` y `user`), middlewares `requireAuth` y `requireRole`, rutas y panel administrativo (`/api/admin/*` y `/admin`), pruebas unitarias y E2E con Playwright, y despliegue en Render/Vercel. |
 
 ---
 
