@@ -1,134 +1,97 @@
-# Pequeñas Fiestas
+# Pequeñas Fiestas (GigaShow)
 
-Monorepo de la plataforma GigaShow para conectar clientes con artistas y
-facilitar la gestión de reservas.
+Monorepo de la plataforma **GigaShow** para conectar clientes con artistas profesionales y gestionar reservas, calificaciones y auditoría administrativa.
 
-## Estructura
+---
 
-Este repositorio contiene dos proyectos como submódulos Git:
+## 1. Estructura del Proyecto y Repositorios
 
-- `frontend`: aplicación web en React 19 y Vite 7.
-- `backend`: API en Node.js y Express.
+Este repositorio articula dos submódulos Git independientes:
 
-Los submódulos tienen sus propios repositorios:
+- **`backend/`** ([Ruales1138/pequennas_fiestas-backend](https://github.com/Ruales1138/pequennas_fiestas-backend)): API RESTful en **Node.js 22**, **Express 5**, **TypeScript**, **Prisma ORM**, **PostgreSQL**, **JWT + Bcrypt** y **Supabase Storage** bajo Arquitectura Limpia.
+- **`frontend/`** ([Ruales1138/pequennas_fiestas-frontend](https://github.com/Ruales1138/pequennas_fiestas-frontend)): Aplicación web en **Next.js 16 (App Router)**, **React 19**, **TypeScript** y **Tailwind CSS 4**.
 
-- [Frontend](https://github.com/ruales1138/pequennas_fiestas-frontend)
-- [Backend](https://github.com/ruales1138/pequennas_fiestas-backend)
+---
 
-## Tecnologías
+## 2. Reparto de Tareas del Equipo
 
-| Componente | Tecnología |
-| --- | --- |
-| Frontend | React 19, Vite 7, Node.js 22 |
-| Frontend en producción | Nginx 1.27 |
-| Backend | Node.js, Express |
-| Base de datos | PostgreSQL 16 |
-| Contenedores | Docker y Docker Compose |
+| Integrante | Área / Rol | Entregables Principales |
+| --- | --- | --- |
+| **Pinilla** | Backend Base, Prisma & Storage | Migración a TypeScript, arquitectura limpia de 4 capas (`domain`, `application`, `infrastructure`, `interface`), Prisma ORM y migraciones, CRUD de entidades (`artists`, `bookings`, `ratings`) con paginación/filtros/borrado lógico, y subida de imágenes a Supabase Storage. |
+| **Ruales** | Frontend Next.js & Experiencia de Usuario | Migración del frontend a Next.js App Router con TypeScript, catálogo con filtros dinámicos, detalle de artista, reservas, cliente HTTP centralizado y diseño responsivo. |
+| **Tomás Buriticá (Buri)** | Autenticación JWT, Roles, Panel Admin & Pruebas | Endpoints `/api/auth/register` y `/api/auth/login` con JWT y `bcrypt`, seed de base de datos (`admin` y `user`), middlewares `requireAuth` y `requireRole`, rutas y panel administrativo (`/api/admin/*` y `/admin`), pruebas unitarias y E2E con Playwright, y despliegue en Render/Vercel. |
 
-## Clonar el proyecto
+---
 
-Para clonar el monorepo junto con sus submódulos:
+## 3. Clonar e Inicializar el Proyecto
 
 ```bash
-git clone --recurse-submodules https://github.com/ruales1138/pequennas_fiestas.git
+git clone --recurse-submodules https://github.com/Ruales1138/pequennas_fiestas.git
 cd pequennas_fiestas
 ```
 
-Si ya se clonó el repositorio sin submódulos:
+Si ya clonaste el repositorio sin submódulos:
 
 ```bash
 git submodule update --init --recursive
 ```
 
-Para actualizar los submódulos a las referencias configuradas por el
-monorepo:
+---
 
-```bash
-git submodule update --remote --merge
-```
+## 4. Configuración y Ejecución Local
 
-## Frontend
+### 4.1 Backend (`backend/`)
+1. Copiar `.env.example` a `.env` y configurar `DATABASE_URL` y `JWT_SECRET`.
+2. Instalar dependencias, ejecutar migraciones y correr el seed:
+   ```bash
+   cd backend
+   npm install
+   npx prisma migrate deploy
+   npm run seed
+   npm run dev
+   ```
 
-El frontend se puede ejecutar localmente desde `frontend`:
+### 4.2 Frontend (`frontend/`)
+1. Copiar `.env.example` a `.env` (`NEXT_PUBLIC_API_URL=http://localhost:3000`).
+2. Instalar dependencias y levantar el servidor de desarrollo:
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
 
-```bash
-cd frontend
-npm ci
-npm run dev
-```
+---
 
-También se puede descargar la imagen publicada en DockerHub:
+## 5. Credenciales de Prueba (Seed)
 
-```bash
-docker pull ruales1138/gigashow-frontend:latest
-docker run --rm -p 8080:80 ruales1138/gigashow-frontend:latest
-```
+| Rol | Correo electrónico | Contraseña de prueba | Acceso |
+| --- | --- | --- | --- |
+| **Administrador (`admin`)** | `admin@gigashow.com` | `Admin123!` | Panel `/admin` y gestión completa de recursos |
+| **Usuario estándar (`user`)** | `user@gigashow.com` | `User123!` | Catálogo, reservas y calificaciones (`403` en `/admin`) |
+| **Cliente (`cliente`)** | `cliente@gigashow.com` | `Cliente123!` | Catálogo, reservas y calificaciones (`403` en `/admin`) |
+| **Artista (`artista`)** | `artista@gigashow.com` | `Artista123!` | Panel `/dashboard` de artista |
 
-La aplicación estará disponible en `http://localhost:8080`.
+---
 
-## Ejecutar frontend, backend y base de datos
+## 6. Pruebas y Aseguramiento de Calidad
 
-Docker Compose levanta los tres servicios y crea el esquema inicial de
-PostgreSQL:
+- **Pruebas Unitarias (Backend):**
+  ```bash
+  cd backend
+  npm run build
+  npm test
+  ```
+- **Linter, Compilación y Pruebas E2E con Playwright (Frontend):**
+  ```bash
+  cd frontend
+  npm run lint
+  npm run build
+  npm run test:e2e
+  ```
 
-```bash
-docker compose up --build
-```
+---
 
-Servicios disponibles:
+## 7. Despliegue en Producción
 
-- Frontend: `http://localhost:8081`
-- Backend: `http://localhost:3001`
-- Swagger: `http://localhost:3001/api-docs/`
-- PostgreSQL: `localhost:5432`
-
-Para detener los servicios:
-
-```bash
-docker compose down
-```
-
-Para eliminar también los datos locales de PostgreSQL:
-
-```bash
-docker compose down -v
-```
-
-El frontend ya tiene una imagen publicada en DockerHub:
-
-```bash
-docker pull ruales1138/gigashow-frontend:latest
-```
-
-El backend también está publicado:
-
-```bash
-docker pull ruales1138/gigashow-backend:latest
-```
-
-## Historias y pruebas
-
-Las historias de usuario y sus responsables están documentadas en
-[ENTREGA_SEGUNDA.md](./ENTREGA_SEGUNDA.md).
-
-### Pruebas unitarias del backend
-
-Desde `backend`:
-
-```bash
-npm ci
-npm test
-```
-
-### Pruebas iniciales con Playwright
-
-Con Docker Compose levantado, desde `frontend`:
-
-```bash
-npm ci
-npx playwright install chromium
-npm run test:e2e
-```
-
-Las pruebas verifican la carga de la página principal y la navegación directa
-al catálogo.
+- **Backend + Base de Datos PostgreSQL:** Desplegado en **Render** (`Ruales1138/pequennas_fiestas-backend`).
+- **Frontend Next.js:** Desplegado en **Vercel** (`Ruales1138/pequennas_fiestas-frontend`).
