@@ -93,5 +93,8 @@ git submodule update --init --recursive
 
 ## 7. Despliegue en Producción
 
-- **Backend + Base de Datos PostgreSQL:** Desplegado en **Render** (`Ruales1138/pequennas_fiestas-backend`).
-- **Frontend Next.js:** Desplegado en **Vercel** (`Ruales1138/pequennas_fiestas-frontend`).
+- **Frontend Next.js (Vercel):** [https://pequennasfiestas-frontend.vercel.app/](https://pequennasfiestas-frontend.vercel.app/) (`Ruales1138/pequennas_fiestas-frontend`)
+- **Backend + PostgreSQL (Render):** [https://pequennas-fiestas-backend.onrender.com](https://pequennas-fiestas-backend.onrender.com) (`Ruales1138/pequennas_fiestas-backend`)
+  - **Salud de API:** [https://pequennas-fiestas-backend.onrender.com/health](https://pequennas-fiestas-backend.onrender.com/health)
+  - **Salud de Base de Datos:** [https://pequennas-fiestas-backend.onrender.com/health/db](https://pequennas-fiestas-backend.onrender.com/health/db)
+  - **Documentación OpenAPI (Swagger):** [https://pequennas-fiestas-backend.onrender.com/api-docs](https://pequennas-fiestas-backend.onrender.com/api-docs)
