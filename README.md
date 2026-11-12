@@ -1,6 +1,6 @@
-# Pequeñas Fiestas (GigaShow)
+# Pequeñas Fiestas
 
-Monorepo de la plataforma **GigaShow** para conectar clientes con artistas profesionales y gestionar reservas, calificaciones y auditoría administrativa.
+Monorepo de la plataforma **Pequeñas Fiestas** para conectar clientes con artistas profesionales y gestionar reservas, calificaciones y auditoría administrativa.
 
 ---
 
@@ -66,10 +66,10 @@ git submodule update --init --recursive
 
 | Rol | Correo electrónico | Contraseña de prueba | Acceso |
 | --- | --- | --- | --- |
-| **Administrador (`admin`)** | `admin@gigashow.com` | `Admin123!` | Panel `/admin` y gestión completa de recursos |
-| **Usuario estándar (`user`)** | `user@gigashow.com` | `User123!` | Catálogo, reservas y calificaciones (`403` en `/admin`) |
-| **Cliente (`cliente`)** | `cliente@gigashow.com` | `Cliente123!` | Catálogo, reservas y calificaciones (`403` en `/admin`) |
-| **Artista (`artista`)** | `artista@gigashow.com` | `Artista123!` | Panel `/dashboard` de artista |
+| **Administrador (`admin`)** | `admin@pequennasfiestas.com` | `Admin123!` | Panel `/admin` y gestión completa de recursos |
+| **Usuario estándar (`user`)** | `user@pequennasfiestas.com` | `User123!` | Catálogo, reservas y calificaciones (`403` en `/admin`) |
+| **Cliente (`cliente`)** | `cliente@pequennasfiestas.com` | `Cliente123!` | Catálogo, reservas y calificaciones (`403` en `/admin`) |
+| **Artista (`artista`)** | `artista@pequennasfiestas.com` | `Artista123!` | Panel `/dashboard` de artista |
 
 ---
 
