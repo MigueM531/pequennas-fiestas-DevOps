@@ -62,14 +62,16 @@ git submodule update --init --recursive
 
 ---
 
-## 5. Credenciales de Prueba (Seed)
+## 5. Roles y Usuarios de Prueba (Seed)
 
-| Rol | Correo electrónico | Contraseña de prueba | Acceso |
-| --- | --- | --- | --- |
-| **Administrador (`admin`)** | `admin@pequennasfiestas.com` | `Admin123!` | Panel `/admin` y gestión completa de recursos |
-| **Usuario estándar (`user`)** | `user@pequennasfiestas.com` | `User123!` | Catálogo, reservas y calificaciones (`403` en `/admin`) |
-| **Cliente (`cliente`)** | `cliente@pequennasfiestas.com` | `Cliente123!` | Catálogo, reservas y calificaciones (`403` en `/admin`) |
-| **Artista (`artista`)** | `artista@pequennasfiestas.com` | `Artista123!` | Panel `/dashboard` de artista |
+Los usuarios de prueba se aprovisionan ejecutando `npm run seed` en `backend/` (ver `backend/src/infrastructure/prisma/seed.ts`), sin exponer contraseñas ni credenciales sensibles en este documento:
+
+| Rol | Acceso |
+| --- | --- |
+| **Administrador (`admin`)** | Panel `/admin` y gestión completa de recursos |
+| **Usuario estándar (`user`)** | Catálogo, reservas y calificaciones (`403` en `/admin`) |
+| **Cliente (`cliente`)** | Catálogo, reservas y calificaciones (`403` en `/admin`) |
+| **Artista (`artista`)** | Panel `/dashboard` de artista |
 
 ---
 
