@@ -16,13 +16,11 @@ services:
       retries: 10
 
   backend:
-    build:
-      context: ./backend
+    image: ruales1138/gigashow-backend:latest
     environment:
       DATABASE_URL: postgresql://gigashow:gigashow_dev_password@database:5432/gigashow?schema=public
       JWT_SECRET: compose-dev-jwt-secret-change-in-prod
       JWT_EXPIRES_IN: 24h
-      BETTER_AUTH_SECRET: compose-dev-auth-secret-change-in-prod
       PORT: "3000"
       FRONTEND_ORIGIN: http://localhost:3001
       BACKEND_URL: http://localhost:3000
@@ -31,17 +29,13 @@ services:
     depends_on:
       database:
         condition: service_healthy
-    command: sh -c "npx prisma migrate deploy && npm run seed && npm start"
 
   frontend:
-    build:
-      context: ./frontend
-      args:
-        NEXT_PUBLIC_API_URL: http://localhost:3000
+    image: ruales1138/gigashow-frontend:latest
     environment:
       NEXT_PUBLIC_API_URL: http://localhost:3000
     ports:
-      - "3001:3000"
+      - "3001:80" # o 3000 según exponga el contenedor de Nginx de Ruales
     depends_on:
       - backend
 
