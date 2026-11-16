@@ -11,7 +11,7 @@ gestionar solicitudes de reserva.
 
 - Heiver David Ruales Luna
 - Alejandro Ruiz Diaz
-- Miguel Angel Martines Tamayo
+- Miguel Angel Martinez Tamayo
 
 Repositorio principal:
 
@@ -207,11 +207,11 @@ responsables y estados según la implementación actual.
 | ID | Historia de usuario | Criterios de aceptación | Responsable | Estado |
 | --- | --- | --- | --- | --- |
 | HU-01 | Como cliente, quiero registrarme e iniciar sesión para acceder a las opciones de reserva. | El usuario puede registrarse, iniciar sesión y mantener una sesión activa mediante la API de autenticación. | Alejandro Ruiz Diaz | Implementada |
-| HU-02 | Como cliente, quiero ver el catálogo de shows y servicios de fiesta para elegir la mejor opción. | El catálogo carga los servicios disponibles y permite consultar los detalles de un artista. | Miguel Angel Martines Tamayo | Implementada |
+| HU-02 | Como cliente, quiero ver el catálogo de shows y servicios de fiesta para elegir la mejor opción. | El catálogo carga los servicios disponibles y permite consultar los detalles de un artista. | Miguel Angel Martinez Tamayo | Implementada |
 | HU-03 | Como cliente, quiero reservar un servicio seleccionando la fecha de mi evento. | El cliente autenticado puede enviar una solicitud de reserva con la información del evento y visualizar el resultado. | Alejandro Ruiz Diaz | Implementada |
-| HU-04 | Como proveedor, quiero subir fotos de mi espectáculo para promocionar mi oferta. | El proveedor autenticado puede cargar imágenes válidas y el sistema las almacena para su consulta. | Miguel Angel Martines Tamayo | Implementada |
+| HU-04 | Como proveedor, quiero subir fotos de mi espectáculo para promocionar mi oferta. | El proveedor autenticado puede cargar imágenes válidas y el sistema las almacena para su consulta. | Miguel Angel Martinez Tamayo | Implementada |
 | HU-05 | Como administrador, quiero ver la lista general de usuarios para auditar el sistema. | El administrador puede consultar un listado protegido de usuarios y servicios registrados. | Heiver David Ruales Luna | No iniciada |
-| HU-06 | Como proveedor, quiero configurar mi perfil para publicar mi información y servicios. | El proveedor puede completar y guardar la información de su perfil mediante el flujo de onboarding. | Miguel Angel Martines Tamayo | Implementada |
+| HU-06 | Como proveedor, quiero configurar mi perfil para publicar mi información y servicios. | El proveedor puede completar y guardar la información de su perfil mediante el flujo de onboarding. | Miguel Angel Martinez Tamayo | Implementada |
 
 HU-06 es una ampliación del alcance definida después de la Entrega 1. La
 verificación de `/health`, `/health/db` y Swagger se considera una actividad
