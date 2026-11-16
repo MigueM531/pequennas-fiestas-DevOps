@@ -6,7 +6,5 @@ metadata:
 data:
   NODE_ENV: "production"
   PORT: "3000"
-  JWT_EXPIRES_IN: "24h"
-  FRONTEND_ORIGIN: "http://localhost:30080,http://127.0.0.1:30080"
+  FRONTEND_ORIGIN: "http://localhost:30080"
   BACKEND_URL: "http://localhost:30001"
-  SUPABASE_BUCKET: "artists"

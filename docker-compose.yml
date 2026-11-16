@@ -9,6 +9,7 @@ services:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/001-init.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U gigashow -d gigashow"]
       interval: 5s
@@ -18,14 +19,13 @@ services:
   backend:
     image: ruales1138/gigashow-backend:latest
     environment:
-      DATABASE_URL: postgresql://gigashow:gigashow_dev_password@database:5432/gigashow?schema=public
-      JWT_SECRET: compose-dev-jwt-secret-change-in-prod
-      JWT_EXPIRES_IN: 24h
+      DATABASE_URL: postgresql://gigashow:gigashow_dev_password@database:5432/gigashow
       PORT: "3000"
-      FRONTEND_ORIGIN: http://localhost:3001
-      BACKEND_URL: http://localhost:3000
+      FRONTEND_ORIGIN: http://localhost:8081
+      BACKEND_URL: http://localhost:3001
+      BETTER_AUTH_SECRET: compose-development-secret-change-me
     ports:
-      - "3000:3000"
+      - "3001:3000"
     depends_on:
       database:
         condition: service_healthy
@@ -33,9 +33,9 @@ services:
   frontend:
     image: ruales1138/gigashow-frontend:latest
     environment:
-      NEXT_PUBLIC_API_URL: http://localhost:3000
+      VITE_API_URL: http://localhost:3001
     ports:
-      - "3001:80" # o 3000 según exponga el contenedor de Nginx de Ruales
+      - "8081:80"
     depends_on:
       - backend
 
