@@ -23,6 +23,11 @@ dist-ssr
 *.sln
 *.sw?
 *.env
+.env
+.env.k8s
+.env.*
+!.env.example
+!.env.k8s.example
 
 # Instrucciones de agentes y rúbricas internas
 agents.md
@@ -30,3 +35,9 @@ AGENTS.md
 readme_tareas_rubrica.md
 README_TAREAS_RUBRICA.md
 README_TAREAS_RUBRICA.md.pdf
+
+k8s/backend-secret.yaml
+k8s/postgres-secret.yaml
+k8s/*-secret.yaml
+
+k8s/*-secret.yaml
