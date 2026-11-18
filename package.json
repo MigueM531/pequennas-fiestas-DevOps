@@ -1,0 +1,14 @@
+{
+  "name": "gigashow-devops-infra",
+  "version": "1.0.0",
+  "description": "Infraestructura, CI/CD, Kubernetes y pruebas automatizadas para GigaShow",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/unit/config.test.js tests/unit/controlled-failure.test.js",
+    "test:unit": "node --test tests/unit/config.test.js tests/unit/controlled-failure.test.js",
+    "test:integration": "node --test tests/integration/api-contracts.test.js",
+    "test:e2e": "node --test tests/e2e/booking-e2e.test.js",
+    "test:k8s": "TARGET_BACKEND_URL=http://$(minikube ip):30001 TARGET_FRONTEND_URL=http://$(minikube ip):30080 node --test tests/integration/api-contracts.test.js tests/e2e/booking-e2e.test.js",
+    "test:persistence": "./tests/persistence/verify-persistence.sh k8s"
+  }
+}
