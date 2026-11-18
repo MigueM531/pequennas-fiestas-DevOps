@@ -1,0 +1,167 @@
+name: CI/CD Pipeline - GigaShow Infrastructure & Validation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      simulate_failure:
+        description: 'Simular fallo controlado de prueba para demostración (Criterio D2)'
+        required: false
+        type: boolean
+        default: false
+
+env:
+  NODE_VERSION: '22'
+  BACKEND_IMAGE: 'ruales1138/gigashow-backend:latest'
+  FRONTEND_IMAGE: 'ruales1138/gigashow-frontend:latest'
+  POSTGRES_IMAGE: 'postgres:16-alpine'
+
+jobs:
+  lint-and-validate:
+    name: Validación Estática de Manifiestos y Configuración
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del Repositorio Principal
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Validar Sintaxis de Manifiestos Kubernetes (Dry-Run)
+        run: |
+          echo "Verificando manifiestos en k8s/..."
+          for file in k8s/*.yaml; do
+            echo "Validando $file..."
+            kubectl apply --dry-run=client -f "$file"
+          done
+
+      - name: Validar Configuración de Docker Compose
+        run: |
+          echo "Validando docker-compose.yml..."
+          cp .env.example .env
+          docker compose config
+
+  unit-tests:
+    name: Pruebas Unitarias y de Configuración
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del Repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Ejecutar Pruebas Unitarias de Seguridad y Schemas
+        run: |
+          node --test tests/unit/config.test.js
+
+  integration-and-e2e:
+    name: Pruebas de Integración, E2E y Persistencia (Docker Compose)
+    needs: [lint-and-validate, unit-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del Repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Preparar Variables de Entorno Seguras
+        run: |
+          cp .env.example .env
+          echo "Variables preparadas para el entorno de CI."
+
+      - name: Descargar Imágenes Oficiales de DockerHub
+        run: |
+          echo "Descargando imágenes publicadas..."
+          docker compose pull
+
+      - name: Iniciar Infraestructura con Docker Compose
+        run: |
+          docker compose up -d
+          echo "Esperando que los contenedores alcancen estado Healthy..."
+          timeout 60s bash -c 'until [ "$(docker inspect -f {{.State.Health.Status}} gigashow-backend 2>/dev/null)" = "healthy" ]; do sleep 2; done'
+          docker compose ps
+
+      - name: Asegurar Inicialización del Esquema SQL en PostgreSQL
+        run: |
+          echo "Verificando tablas en PostgreSQL..."
+          docker exec gigashow-database psql -U gigashow -d gigashow -c "\dt" || \
+          (docker exec -i gigashow-database psql -U gigashow -d gigashow < db/init.sql && docker compose restart backend)
+          sleep 5
+
+      - name: Ejecutar Pruebas de Contratos de API e Integración
+        run: |
+          TARGET_BACKEND_URL=http://localhost:3000 TARGET_FRONTEND_URL=http://localhost:8081 node --test tests/integration/api-contracts.test.js
+
+      - name: Ejecutar Flujo Funcional E2E (HU-03 Reserva y Casos de Error)
+        run: |
+          TARGET_BACKEND_URL=http://localhost:3000 node --test tests/e2e/booking-e2e.test.js
+
+      - name: Ejecutar Prueba de Persistencia de PostgreSQL
+        run: |
+          chmod +x tests/persistence/verify-persistence.sh
+          ./tests/persistence/verify-persistence.sh compose
+
+      - name: Capturar Logs ante Fallos
+        if: failure()
+        run: |
+          echo "=== LOGS BACKEND ==="
+          docker logs gigashow-backend || true
+          echo "=== LOGS DATABASE ==="
+          docker logs gigashow-database || true
+          echo "=== LOGS FRONTEND ==="
+          docker logs gigashow-frontend || true
+
+      - name: Detener Infraestructura de Pruebas
+        if: always()
+        run: |
+          docker compose down
+
+  controlled-failure-gate:
+    name: Compuerta de Fallo Controlado
+    needs: [integration-and-e2e]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del Repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Verificar Compuerta de Calidad
+        run: |
+          SIMULATE_FAILURE="${{ inputs.simulate_failure || 'false' }}"
+          echo "Estado de simulate_failure: $SIMULATE_FAILURE"
+          SIMULATE_FAILURE="$SIMULATE_FAILURE" node --test tests/unit/controlled-failure.test.js
+
+  deployment-ready:
+    name: Aprobación para Despliegue en Kubernetes
+    needs: [controlled-failure-gate]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Registrar Trazabilidad y Aprobación
+        run: |
+          echo "=================================================================="
+          echo "CADENA DE ENTREGA VERIFICADA CON ÉXITO"
+          echo "=================================================================="
+          echo "• Commit SHA: ${{ github.sha }}"
+          echo "• Backend Image: ${{ env.BACKEND_IMAGE }}"
+          echo "• Frontend Image: ${{ env.FRONTEND_IMAGE }}"
+          echo "• Pruebas Unitarias: APROBADAS"
+          echo "• Pruebas de Integración y Contratos: APROBADAS"
+          echo "• Flujo E2E (HU-03): APROBADO"
+          echo "• Persistencia de Datos en PostgreSQL: VERIFICADA"
+          echo "• Estado: LISTO PARA DESPLIEGUE EN MINIKUBE / KUBERNETES"
+          echo "=================================================================="
