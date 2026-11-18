@@ -18,7 +18,7 @@ spec:
       containers:
         - name: backend
           image: ruales1138/gigashow-backend:latest
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
               name: http
@@ -34,13 +34,15 @@ spec:
             initialDelaySeconds: 15
             periodSeconds: 15
             timeoutSeconds: 3
+            failureThreshold: 3
           readinessProbe:
             httpGet:
               path: /health/db
               port: 3000
-            initialDelaySeconds: 10
+            initialDelaySeconds: 15
             periodSeconds: 10
             timeoutSeconds: 5
+            failureThreshold: 5
           resources:
             requests:
               cpu: "150m"

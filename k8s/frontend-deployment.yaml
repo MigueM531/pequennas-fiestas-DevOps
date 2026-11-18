@@ -18,13 +18,13 @@ spec:
       containers:
         - name: frontend
           image: ruales1138/gigashow-frontend:latest
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
               name: http
           env:
             - name: VITE_API_URL
-              value: "http://localhost:30001"
+              value: "http://localhost:3000"
           livenessProbe:
             httpGet:
               path: /
