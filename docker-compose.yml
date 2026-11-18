@@ -1,43 +1,64 @@
 services:
   database:
     image: postgres:16-alpine
+    container_name: gigashow-database
     environment:
-      POSTGRES_DB: gigashow
-      POSTGRES_USER: gigashow
-      POSTGRES_PASSWORD: gigashow_dev_password
+      POSTGRES_DB: ${POSTGRES_DB:-gigashow}
+      POSTGRES_USER: ${POSTGRES_USER:-gigashow}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-gigashow_dev_password}
     ports:
-      - "5433:5432"
+      - "${DB_PORT:-5433}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./db/init.sql:/docker-entrypoint-initdb.d/001-init.sql:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U gigashow -d gigashow"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-gigashow} -d ${POSTGRES_DB:-gigashow}"]
       interval: 5s
       timeout: 5s
       retries: 10
+      start_period: 5s
+    restart: unless-stopped
 
   backend:
     image: ruales1138/gigashow-backend:latest
+    container_name: gigashow-backend
     environment:
-      DATABASE_URL: postgresql://gigashow:gigashow_dev_password@database:5432/gigashow
+      NODE_ENV: production
+      DATABASE_URL: postgresql://${POSTGRES_USER:-gigashow}:${POSTGRES_PASSWORD:-gigashow_dev_password}@database:5432/${POSTGRES_DB:-gigashow}
       PORT: "3000"
-      FRONTEND_ORIGIN: http://localhost:8081
-      BACKEND_URL: http://localhost:3001
-      BETTER_AUTH_SECRET: compose-development-secret-change-me
+      FRONTEND_ORIGIN: ${FRONTEND_ORIGIN:-http://localhost:8081}
+      BACKEND_URL: ${BACKEND_URL:-http://localhost:3000}
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:-cambiar_por_un_secreto_seguro_de_al_menos_32_caracteres_dev}
     ports:
-      - "3001:3000"
+      - "${BACKEND_PORT:-3000}:3000"
     depends_on:
       database:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3000/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
 
   frontend:
     image: ruales1138/gigashow-frontend:latest
+    container_name: gigashow-frontend
     environment:
-      VITE_API_URL: http://localhost:3001
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:3000}
     ports:
-      - "8081:80"
+      - "${FRONTEND_PORT:-8081}:80"
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:80/ || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
 
 volumes:
   postgres_data:
