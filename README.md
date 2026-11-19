@@ -100,3 +100,8 @@ Los usuarios de prueba se aprovisionan ejecutando `npm run seed` en `backend/` (
   - **Salud de API:** [https://pequennas-fiestas-backend.onrender.com/health](https://pequennas-fiestas-backend.onrender.com/health)
   - **Salud de Base de Datos:** [https://pequennas-fiestas-backend.onrender.com/health/db](https://pequennas-fiestas-backend.onrender.com/health/db)
   - **Documentación OpenAPI (Swagger):** [https://pequennas-fiestas-backend.onrender.com/api-docs](https://pequennas-fiestas-backend.onrender.com/api-docs)
+
+
+
+
+HOLA PRUEBA DE PIPELINE
